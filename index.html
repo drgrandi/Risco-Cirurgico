@@ -165,6 +165,10 @@
         <label class="t" for="cardioq">Qual doença cerebral / cardiovascular?</label>
         <input type="text" id="cardioq">
       </div>
+      <div class="detail" id="d-outros">
+        <label class="t" for="outrosq">Outros (descreva)</label>
+        <textarea id="outrosq" rows="2"></textarea>
+      </div>
     </div>
     <div class="row">
       <label class="t" for="hppcir">HPP cirúrgico</label>
@@ -188,16 +192,46 @@
   <section>
     <h2>Exames</h2>
     <div class="row">
-      <div class="examhead"><span class="name">Lab</span><input type="text" class="dmask" id="labdt" placeholder="dd/mm/aa" inputmode="numeric" maxlength="8"></div>
-      <textarea id="lab" rows="2" style="margin-top:6px">HEMOGRAMA OK COAGULOGRAMA OK BIOQUIMICA OK</textarea>
+      <label class="opt" style="display:inline-flex"><input type="checkbox" id="labchk"> Lab</label>
+      <div class="detail" id="d-lab">
+        <div class="examhead" style="margin-top:8px"><span class="name">Data</span><input type="text" class="dmask" id="labdt" placeholder="dd/mm/aa" inputmode="numeric" maxlength="8"></div>
+        <textarea id="lab" rows="2" style="margin-top:6px">HEMOGRAMA OK COAGULOGRAMA OK BIOQUIMICA OK</textarea>
+      </div>
     </div>
     <div class="row">
-      <div class="examhead"><span class="name">ECG</span><input type="text" class="dmask" id="ecgdt" placeholder="dd/mm/aa" inputmode="numeric" maxlength="8"></div>
-      <textarea id="ecg" rows="3" style="margin-top:6px">RCR SINUSAL QRS NORMAL SEM ALTS INESP DA REPOLARIZAÇÃO FC  BPM PR  MS EIXO 0/90</textarea>
+      <label class="opt" style="display:inline-flex"><input type="checkbox" id="ecgchk"> ECG</label>
+      <div class="detail" id="d-ecg">
+        <div class="examhead" style="margin-top:8px"><span class="name">Data</span><input type="text" class="dmask" id="ecgdt" placeholder="dd/mm/aa" inputmode="numeric" maxlength="8"></div>
+        <textarea id="ecg" rows="3" style="margin-top:6px">RCR SINUSAL QRS NORMAL SEM ALTS INESP DA REPOLARIZAÇÃO FC  BPM PR  MS EIXO 0/90</textarea>
+      </div>
     </div>
     <div class="row">
-      <div class="examhead"><span class="name">Rx tórax</span><input type="text" class="dmask" id="rxdt" placeholder="dd/mm/aa" inputmode="numeric" maxlength="8"></div>
-      <textarea id="rx" rows="4" style="margin-top:6px">TRANSPARENCIA PULMONAR PRESERVADA SEIOS COSTO FRENICOS LIVRES SEM SINAIS DE CARDIOMEGALIA.</textarea>
+      <label class="opt" style="display:inline-flex"><input type="checkbox" id="rxchk"> Rx tórax</label>
+      <div class="detail" id="d-rx">
+        <div class="examhead" style="margin-top:8px"><span class="name">Data</span><input type="text" class="dmask" id="rxdt" placeholder="dd/mm/aa" inputmode="numeric" maxlength="8"></div>
+        <textarea id="rx" rows="4" style="margin-top:6px">TRANSPARENCIA PULMONAR PRESERVADA SEIOS COSTO FRENICOS LIVRES SEM SINAIS DE CARDIOMEGALIA.</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <label class="opt" style="display:inline-flex"><input type="checkbox" id="tcchk"> TC de tórax</label>
+      <div class="detail" id="d-tc">
+        <div class="examhead" style="margin-top:8px"><span class="name">Data</span><input type="text" class="dmask" id="tcdt" placeholder="dd/mm/aa" inputmode="numeric" maxlength="8"></div>
+        <textarea id="tctxt" rows="2" style="margin-top:6px;text-transform:uppercase">SEM LINFONODOMEGALIA E CARDIOMEGALIA.</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <label class="opt" style="display:inline-flex"><input type="checkbox" id="ecochk"> Eco TT</label>
+      <div class="detail" id="d-eco">
+        <div class="examhead" style="margin-top:8px"><span class="name">Data</span><input type="text" class="dmask" id="ecodt" placeholder="dd/mm/aa" inputmode="numeric" maxlength="8"></div>
+        <textarea id="ecotxt" rows="2" style="margin-top:6px;text-transform:uppercase">FUNÇÃO VE OK SEM ALTS SEGS. VD OK. AORTA OK. VALVAS SEM ALTS SIGNIFICATIVAS.</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <label class="opt" style="display:inline-flex"><input type="checkbox" id="dopchk"> Doppler MMII</label>
+      <div class="detail" id="d-dop">
+        <div class="examhead" style="margin-top:8px"><span class="name">Data</span><input type="text" class="dmask" id="dopdt" placeholder="dd/mm/aa" inputmode="numeric" maxlength="8"></div>
+        <textarea id="doptxt" rows="2" style="margin-top:6px;text-transform:uppercase">SEM TVP</textarea>
+      </div>
     </div>
     <div class="row">
       <label class="t" for="demais">Demais exames</label>
@@ -282,7 +316,7 @@
   var FUNCIONAL = ["Independente","Parcialmente Dependente","Dependente"];
   var HPP = ["HAS","DLP","DM","TABAGISMO","ETILISMO SOCIAL","DÇ CEREBRO E CARDIOVASCULAR",
     "PRECORDIALGIA (1 LANCE DE ESCADA)","DISPNEIA AOS PEQS ESFORÇOS","PNEUMOPATIA","DÇ ONCOLOGICA","TROMBOSE",
-    "DIST HEMATOLOGICO","DÇ REUMATOLOGICA"];
+    "DIST HEMATOLOGICO","DÇ REUMATOLOGICA","OUTROS"];
   var CAPRINI = ["ALTO","MODERADO","BAIXO"];
   var LEE = ["Classe I(0,4%)","Classe II(0,9%)","Classe III(6,6%)","Classe IV(11%)"];
   var ASA = ["1","2","3","4","5","6"];
@@ -342,6 +376,7 @@
   placeAfter("DÇ ONCOLOGICA","d-onc");
   placeAfter("PNEUMOPATIA","d-pneumo");
   placeAfter("DÇ CEREBRO E CARDIOVASCULAR","d-cardio");
+  placeAfter("OUTROS","d-outros");
   buildRadios("caprini","caprini",CAPRINI);
   buildRadios("lee","lee",LEE);
   buildRadios("asa","asa",ASA);
@@ -392,6 +427,13 @@
     $("d-onc").classList.toggle("open", hppChecked("DÇ ONCOLOGICA"));
     $("d-pneumo").classList.toggle("open", hppChecked("PNEUMOPATIA"));
     $("d-cardio").classList.toggle("open", hppChecked("DÇ CEREBRO E CARDIOVASCULAR"));
+    $("d-outros").classList.toggle("open", hppChecked("OUTROS"));
+    $("d-lab").classList.toggle("open", $("labchk").checked);
+    $("d-ecg").classList.toggle("open", $("ecgchk").checked);
+    $("d-rx").classList.toggle("open", $("rxchk").checked);
+    $("d-tc").classList.toggle("open", $("tcchk").checked);
+    $("d-eco").classList.toggle("open", $("ecochk").checked);
+    $("d-dop").classList.toggle("open", $("dopchk").checked);
   }
   function hppChecked(v){
     var e = document.querySelector('input[name="hpp"][value="'+v+'"]');
@@ -420,6 +462,10 @@
       var pn = $("pneumoq").value.trim();
       return pn ? " ["+pn+"]" : "";
     }
+    if(v==="OUTROS"){
+      var ou = $("outrosq").value.trim().replace(/\s*\n\s*/g," ");
+      return ou ? " ["+ou+"]" : "";
+    }
     if(v==="DÇ CEREBRO E CARDIOVASCULAR"){
       var cv = $("cardioq").value.trim();
       return cv ? " ["+cv+"]" : "";
@@ -446,7 +492,9 @@
 
   function build(){
     var L = [];
-    L.push("RISCO CIRÚRGICO - "+$("hospital").value.trim());
+    var hosp = $("hospital").value.trim();
+    if(hosp) L.push(hosp);
+    L.push("RISCO CIRÚRGICO");
     L.push("");
     L.push("Nome : "+$("nome").value.trim());
     var ag = ageText();
@@ -476,9 +524,12 @@
     L.push(yn(TRANSF[0]));
     L.push("Medicações em uso : "+$("meds").value.trim());
     L.push("Cirurgia Proposta : "+$("cirurgia").value.trim());
-    L.push("Lab ("+$("labdt").value.trim()+") : "+$("lab").value.trim());
-    L.push("ECG ("+$("ecgdt").value.trim()+") : "+$("ecg").value.trim());
-    L.push("Rx Tórax ("+$("rxdt").value.trim()+") : "+$("rx").value.trim());
+    if($("labchk").checked) L.push("Lab ("+$("labdt").value.trim()+") : "+$("lab").value.trim());
+    if($("ecgchk").checked) L.push("ECG ("+$("ecgdt").value.trim()+") : "+$("ecg").value.trim());
+    if($("rxchk").checked)  L.push("Rx Tórax ("+$("rxdt").value.trim()+") : "+$("rx").value.trim());
+    if($("tcchk").checked)  L.push("TC de Tórax ("+$("tcdt").value.trim()+") : "+$("tctxt").value.trim().toUpperCase());
+    if($("ecochk").checked) L.push("Eco TT ("+$("ecodt").value.trim()+") : "+$("ecotxt").value.trim().toUpperCase());
+    if($("dopchk").checked) L.push("Doppler MMII ("+$("dopdt").value.trim()+") : "+$("doptxt").value.trim().toUpperCase());
     L.push("Demais Exames : "+$("demais").value.trim());
 
     var c = radio("caprini");
@@ -780,6 +831,9 @@
     $("lab").value = "HEMOGRAMA OK COAGULOGRAMA OK BIOQUIMICA OK";
     $("ecg").value = "RCR SINUSAL QRS NORMAL SEM ALTS INESP DA REPOLARIZAÇÃO FC  BPM PR  MS EIXO 0/90";
     $("rx").value  = "TRANSPARENCIA PULMONAR PRESERVADA SEIOS COSTO FRENICOS LIVRES SEM SINAIS DE CARDIOMEGALIA.";
+    $("ecotxt").value = "FUNÇÃO VE OK SEM ALTS SEGS. VD OK. AORTA OK. VALVAS SEM ALTS SIGNIFICATIVAS.";
+    $("doptxt").value = "SEM TVP";
+    $("tctxt").value = "SEM LINFONODOMEGALIA E CARDIOMEGALIA.";
     $("orient").value = "LIBERADO(A) PARA O PROCEDIMENTO PROPOSTO.";
     $("medList").innerHTML = ""; excluded = {};
     allYN.forEach(function(q){
