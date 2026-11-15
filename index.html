@@ -152,12 +152,14 @@
       <div class="imc"><label class="t">IMC</label><div class="imc-box" id="imcBox"><span>Informe peso e altura</span></div></div>
     </div>
     <div class="row" style="margin-top:12px">
-      <span class="name">Status funcional</span>
-      <div class="opts" id="funcional"></div>
+      <span class="name">Exame Físico</span>
+      <label class="opt" style="display:inline-flex"><input type="checkbox" id="pachk"> Níveis Tensionais OK</label>
     </div>
     <div class="row">
-      <label class="opt" style="display:inline-flex"><input type="checkbox" id="pachk"> Níveis tensionais ok</label>
+      <span class="name">Status Funcional</span>
+      <div class="opts" id="funcional"></div>
     </div>
+    <div id="yn-ativ"></div>
   </section>
 
   <section>
@@ -168,7 +170,7 @@
       <textarea id="meds" rows="2"></textarea>
     </div>
     <div class="row">
-      <span class="name">HPP clínico</span>
+      <span class="name">HPP Clínico</span>
       <div class="opts hppgrid" id="hpp"></div>
       <div class="detail" id="d-tab">
         <label class="t">Tabagismo</label>
@@ -203,7 +205,7 @@
       </div>
     </div>
     <div class="row">
-      <label class="t" for="hppcir">HPP cirúrgico</label>
+      <label class="t" for="hppcir">HPP Cirúrgico</label>
       <textarea id="hppcir" rows="2"></textarea>
     </div>
     <div class="row">
@@ -360,7 +362,10 @@
     {id:"alergia",  label:"Alergia",  ph:"Qual alergia e qual reação?", def:"Não"}
   ];
   var TRANSF = [
-    {id:"transf", label:"Transfusão sanguínea", ph:"Reação transfusional?", def:"Não", dt:"SEM REAÇÃO TRANSFUSIONAL"}
+    {id:"transf", label:"Transfusão Sanguínea", ph:"Reação transfusional?", def:"Não", dt:"SEM REAÇÃO TRANSFUSIONAL"}
+  ];
+  var ATIV = [
+    {id:"ativfis", label:"Ativ. Física Regular", nd:true, def:"Não"}
   ];
   var FUNCIONAL = ["Independente","Parcialmente Dependente","Dependente"];
   var HPP = ["HAS","DLP","DM","TABAGISMO","ETILISMO SOCIAL","DÇ CEREBRO E CARDIOVASCULAR",
@@ -413,6 +418,7 @@
   buildYN($("yn-top"), TOP);
   buildYN($("yn-ant"), ANT);
   buildYN($("yn-transf"), TRANSF);
+  buildYN($("yn-ativ"), ATIV);
   buildRadios("funcional","funcional",FUNCIONAL);
   buildChecks("hpp","hpp",HPP);
   // detalhes de Tabagismo e DÇ oncológica ficam logo abaixo do próprio item
@@ -430,7 +436,7 @@
   buildRadios("lee","lee",LEE);
   buildRadios("asa","asa",ASA);
 
-  var allYN = TOP.concat(ANT, TRANSF);
+  var allYN = TOP.concat(ANT, TRANSF, ATIV);
 
   function radio(name){
     var el = document.querySelector('input[name="'+name+'"]:checked');
@@ -555,9 +561,10 @@
     var med = "Peso (Kg) : "+$("peso").value.trim()+"   Altura (cm) : "+$("altura").value.trim();
     if(i) med += "   IMC : "+fmt(i.v)+" kg/m² ("+i.c+")";
     L.push(med);
+    if($("pachk").checked) L.push("Exame Físico : NÍVEIS TENSIONAIS OK");
     var f = radio("funcional");
     L.push("Status Funcional: "+FUNCIONAL.map(function(x){return (f===x?"(X)":"()")+" "+x}).join(" "));
-    if($("pachk").checked) L.push("NÍVEIS TENSIONAIS OK");
+    L.push(yn(ATIV[0]));
 
     L.push(yn(ANT[0]));
     L.push("Medicações em uso : "+$("meds").value.trim());
@@ -921,6 +928,9 @@
           var av = parseFloat(am[1].replace(",","."));
           $("altura").value = (av>0 && av<3) ? String(Math.round(av*100)) : am[1];
         }
+      } else if(/^exame fisico/.test(key)){
+        if(nv.indexOf("niveis tensionais")!==-1) $("pachk").checked = true;
+      } else if(/^ativ/.test(key)){ ynApply("ativfis", val);
       } else if(/^retorno\b/.test(key)){ ynApply("retorno", val);
       } else if(/^internad/.test(key)){ ynApply("internado", val);
       } else if(/^status funcional/.test(key)){
